@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Todolist</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+</head>
+
+<body>
+<form name="loginForm">
+    <input type="text" id="loginCode" placeholder="用户名">
+    <input type="password" id="password" placeholder="密码">
+    <input type="submit" class="login" value="login"/>
+</form>
+
+</body>
+
+<script>
+  $("input:submit.login").click(function(){
+    loginCode=$("#loginCode").val();
+    password=$("#password").val();
+    $.post("/login",{loginCode:loginCode,password:password},function(result){
+        alert("OK");
+    },"text");
+  });
+</script>
+</html>

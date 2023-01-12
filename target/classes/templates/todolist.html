@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Todolist</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+</head>
+<body>
+
+<form name="todoForm">
+  <fieldset>
+    <legend>Todo:</legend>
+    <td>title: <input type="text" id="title" size="30"></td><br><br>
+
+    <td>content: <input type="text" id="todo" size="30" style="height:50px"></td><br>
+    <td><input type="submit" class="todolist" value="Add"/></td>
+  </fieldset>
+</form>
+
+<h1>Todolist</h1>
+
+<table>
+  <tr>
+    <th>Filter:</th>
+    <th><input type="text" name="search" id="search"></th>
+    <th><input type="submit" value="查询" onclick="searchClient(this)"/></th>
+  </tr>
+  <tr th:each="m:${list}">
+    <td><input type="button" value="done" th:id="${m.id}" onclick="confirmDone(this)"></td>
+<!--    <td><input type="button" value="display" th:onclick="'javascript:displayClient(\''+${m.id}+'\')'"></td>-->
+    <td><input th:if="${m.display}" type="button" value="display" class="display" alt="one" ></td>
+    <td th:text="${m.titile}" />
+    <td th:if="${m.display}" class="display_no" th:m_id="${m.id}">********</td>
+    <td  th:unless="${m.display}" th:text="${m.content}" />
+  </tr>
+</table>
+
+<script>
+
+  $("input:submit.todolist").click(function(){
+    let title=$("#title").val();
+    let content=$("#todo").val();
+    $.post("/insert",{content:content,title:title},function(result){
+        location.reload();
+    });
+  });
+
+  function confirmDone(data){
+    let res = confirm('确定删除？');
+    let id=data.id;
+    if(res==true){
+      $.post("/remove",{id:id},function(result){
+        location.reload();
+    });
+    }
+  }
+
+   function searchClient(data){
+    let search=$("#search").val();
+    location.href ="/todolist?keywords="+search;
+  }
+
+$(".display").click(function(){
+    let txt=$(this).parent().parent().children(".display_no").text();
+    let isDisplay = (txt=="********");
+    if(isDisplay){
+        let id=$(this).parent().parent().children(".display_no").attr("m_id");
+        $.post("/content",{id:id},function(result){
+            let content=result.data.content;
+             alert(content);
+<!--            $(this).parent().parent().children(".display_no").text(content);-->
+        },'json');
+    }
+    else {
+        $(this).parent().parent().children(".display_no").text("********");
+    }
+  });
+</script>
+
+</body>
+</html>
