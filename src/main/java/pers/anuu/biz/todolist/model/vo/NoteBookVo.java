@@ -23,7 +23,7 @@ public class NoteBookVo {
         this.titile=noteBook.getTitile();
         this.content=noteBook.getContent();
         this.tagId=noteBook.getTagId();
-        this.display= this.getId()%2==0;
+        this.display= noteBook.getDisplay();
     }
 
 }

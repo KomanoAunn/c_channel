@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author anuu
- * @since 2022-12-07
+ * @since 2023-01-13
  */
 public interface BNoteBookMapper extends BaseMapper<BNoteBook> {
 

@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: ENC(D4Bpa47bDpHBHo1Cke6SNyFs2tD6vSJvls8ltCJ13LFjliDekm7wEnd0qvgVN0IZrihlrMYrYPk+FTkTmTAcBKh61B32imoJDSYSSt8AYC0HYz8WAY05oiQjjr4+sI1CneWNQG/9yeLCcQ/RuEQ7ebvQXkEZbNdIh5r1tQmpfCbwRwAz8aRaGX+LpEAX4eZM)
-    username: ENC(Rd+lbYob2cxepn7+i7v7NPneX1TI46EcWPSkZq1H9pyjS4UVoR79V1cFNua/krs7)
-    password: ENC(h2qWkSxq5p9ypHldYMifU1LAq5b7cM1X4TcMcANWvvEMJ8kjDAdZYnT+V06S9L7u)
+    url: ENC(1YMfyXKmL7YWEcTHFzwPNiyq2GMZhsHvF/2k2V7cjr8blM5k9m+QmRXIzGPoemyqYXJvwCH4fZ9hK6wasA/SeIBTIfVvjdV3E0OGAy1ArZmLNIgH2vCLj/KOAPVpapYNFraKvpkU1DP1zsXtIQRCkAx0LMrRx6STODaIw4dbWJ2FrgPShfqiBD42l8A0+lt7IlkXR711o6LotXfFIDPoVg==)
+    username: ENC(EHxw4u32ZnIC8/OP1Q4zcufnZNbCQHRSwVHNcgFyZ7nHD0LWREDEKSXPZsxradoR)
+    password: ENC(w5J9agOfjPNYJnv8rGuZEp0xtM97Gc5BkUMP7TKrCZOmNz1iuV4X00HdsXbz+zys)
 
   thymeleaf:
     prefix: classpath:/templates/
