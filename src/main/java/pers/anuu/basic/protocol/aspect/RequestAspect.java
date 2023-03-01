@@ -11,10 +11,12 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import pers.anuu.basic.common.UserRequestContextHolder;
 import pers.anuu.basic.model.BaseReq;
 import pers.anuu.basic.protocol.annotations.TokenValidate;
 import pers.anuu.biz.user.service.UserLoginService;
 import pers.anuu.util.HttpUtil;
+import pers.anuu.util.json.JacksonUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -60,9 +62,9 @@ public class RequestAspect {
         String uri = request.getRequestURI();
         String ip = HttpUtil.getRemoteIP(request);
         log.info("请求API: {} | {} 【{}.{}】", request.getMethod(), uri, joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
+
         //获取的接口的入参列表，不如传参列表
         Object[] paramValues = joinPoint.getArgs();
-
         BaseReq baseReq = null;
         for (Object paramValue : paramValues) {
             if (paramValue instanceof BaseReq) {
@@ -72,15 +74,18 @@ public class RequestAspect {
         }
 
         if (baseReq == null) {
-            //TODO 赋值
+            baseReq = new BaseReq();
         }
+
+        baseReq.setContent(UserRequestContextHolder.getContent());
+        baseReq.setJsonNode(JacksonUtil.toJsonNode(UserRequestContextHolder.getContent()));
 
         HttpSession session = request.getSession();
         String token = (String) session.getAttribute("token");
         Long userId = userLoginService.getUserIdByToken(token);
 
         log.info("请求参数: token:{},userId:{},ip:{},params:{}", token, userId, ip, baseReq);
-        pers.anuu.basic.common.RequestContextHolder.setInfo(userId, ip);
+        UserRequestContextHolder.setInfo(userId, ip);
 
         //校验请求token
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();

@@ -1,8 +1,7 @@
 package pers.anuu.basic.protocol.filter;
 
 import org.springframework.web.filter.OncePerRequestFilter;
-import pers.anuu.basic.model.BaseReq;
-import pers.anuu.util.json.JacksonUtil;
+import pers.anuu.basic.common.UserRequestContextHolder;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -27,10 +26,7 @@ public class RequestFilter extends OncePerRequestFilter {
         byte[] buff = new byte[1024];
         servletInputStream.read(buff);
         String content = new String(buff, StandardCharsets.UTF_8).split("\0")[0];
-        BaseReq baseReq = new BaseReq();
-        baseReq.setContent(content);
-        baseReq.setJsonNode(JacksonUtil.toJsonNode(content));
-        httpServletRequest.setAttribute("baseReq", baseReq);
+        UserRequestContextHolder.setContent(content);
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }

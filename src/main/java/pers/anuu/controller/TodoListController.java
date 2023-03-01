@@ -11,7 +11,7 @@ import pers.anuu.base.model.AUser;
 import pers.anuu.base.model.BNoteBook;
 import pers.anuu.base.service.IAUserService;
 import pers.anuu.base.service.IBNoteBookService;
-import pers.anuu.basic.common.RequestContextHolder;
+import pers.anuu.basic.common.UserRequestContextHolder;
 import pers.anuu.basic.model.BaseResp;
 import pers.anuu.basic.protocol.annotations.TokenValidate;
 import pers.anuu.biz.todolist.model.params.QueryTodolistParams;
@@ -52,7 +52,7 @@ public class TodoListController extends BaseController {
                 new QueryWrapper<BNoteBook>()
                         .like(!StringUtils.isEmpty(params.getKeywords()), BNoteBook.TITILE, params.getKeywords()));
         List<NoteBookVo> list = noteBookList.stream().map(NoteBookVo::new).collect(Collectors.toList());
-        AUser user = userService.getById(RequestContextHolder.getUserId());
+        AUser user = userService.getById(UserRequestContextHolder.getUserId());
         HashMap<String, Object> reMap = new HashMap<>();
         reMap.put("list", list);
         reMap.put("userName", user.getNickname());
@@ -68,7 +68,7 @@ public class TodoListController extends BaseController {
         BNoteBook noteBook = new BNoteBook();
         noteBook.setTitile(title);
         noteBook.setContent(content);
-        noteBook.setUserId(RequestContextHolder.getUserId());
+        noteBook.setUserId(UserRequestContextHolder.getUserId());
         noteBook.setAddTime(new Date());
         noteBookService.save(noteBook);
         return "";

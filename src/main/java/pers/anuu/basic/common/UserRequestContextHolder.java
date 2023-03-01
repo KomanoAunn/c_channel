@@ -7,9 +7,11 @@ package pers.anuu.basic.common;
  * @description: TODO
  * @date 2022/12/1418:06
  */
-public class RequestContextHolder {
+public class UserRequestContextHolder {
 
     public static final ThreadLocal<RequestContextBean> requestContext = new ThreadLocal<RequestContextBean>();
+
+    public static final ThreadLocal<String> CONTENT = new ThreadLocal<>();
 
     public static Long getUserId() {
         if (requestContext.get() == null) {
@@ -25,5 +27,13 @@ public class RequestContextHolder {
                 .ip(ip)
                 .build();
         requestContext.set(bean);
+    }
+
+    public static String getContent() {
+        return CONTENT.get();
+    }
+
+    public static void setContent(String value) {
+        CONTENT.set(value);
     }
 }
